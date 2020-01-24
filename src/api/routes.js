@@ -22,7 +22,7 @@ router.get('/:id', getImage, async (req, res) => {
 router.post('/', async (req, res) => {
 	const image = new Image({
 		placement: req.body.placement,
-		image: req.body.image,
+		path: req.body.path,
 		caption: req.body.caption
 	});
 	try {

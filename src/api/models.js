@@ -5,7 +5,7 @@ const imageSchema = new Schema({
 		type: String,
 		required: true
 	},
-	image: {
+	path: {
 		type: String,
 		required: true
 	},

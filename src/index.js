@@ -2,6 +2,8 @@ import express from 'express';
 import { config } from 'dotenv';
 import { connect } from 'mongoose';
 import { router } from './api/routes';
+import cors from 'cors';
+import serveIndex from 'serve-index';
 const app = express();
 const port = 8080;
 config();
@@ -13,9 +15,13 @@ connect(process.env.DATABASE_URL, {
 	.then(() => console.log('we connecteeed!'))
 	.catch(err => console.error(err.message));
 
-// app.use('/images', express.static('images'));
+app.use(cors());
 app.use(express.json());
+app.use(
+	'/uploads',
+	express.static('public'),
+	serveIndex('public', { icons: true })
+);
 app.use('/images', router);
-
 
 app.listen(port, () => console.log(`listening on port ${port}`));
