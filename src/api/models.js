@@ -5,6 +5,10 @@ const imageSchema = new Schema({
 		type: String,
 		required: true
 	},
+	placementOrder: {
+		type: Number,
+		required: false
+	},
 	path: {
 		type: String,
 		required: true
