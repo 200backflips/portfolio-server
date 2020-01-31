@@ -2,9 +2,9 @@ import { connect, connection, mongo } from 'mongoose';
 import { config } from 'dotenv';
 import { randomBytes } from 'crypto';
 import { extname } from 'path';
-import GridFsStorage from 'multer-gridfs-storage';
-import multer from 'multer';
 import Grid from 'gridfs-stream';
+import multer from 'multer';
+import GridFsStorage from 'multer-gridfs-storage';
 
 config();
 export let gfs;

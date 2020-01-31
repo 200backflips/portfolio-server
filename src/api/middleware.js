@@ -1,5 +1,5 @@
 import Image from './models';
-import { gfs } from '../mongoose';
+import { gfs } from '../database/mongoose';
 
 export const getImage = async (req, res, next) => {
 	let image;

@@ -1,5 +1,5 @@
 import express from 'express';
-import { connect } from './mongoose';
+import { connect } from './database/mongoose';
 import { images } from './api/routes/images';
 import { uploads } from './api/routes/uploads';
 import cors from 'cors';

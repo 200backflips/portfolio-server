@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { gfs, upload } from '../../mongoose';
+import { gfs, upload } from '../../database/mongoose';
 import { getFile } from '../middleware';
 
 export const uploads = Router();
