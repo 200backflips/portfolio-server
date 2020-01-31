@@ -1,4 +1,5 @@
 import Image from './models';
+import { gfs } from '../mongoose';
 
 export const getImage = async (req, res, next) => {
 	let image;
@@ -11,5 +12,11 @@ export const getImage = async (req, res, next) => {
 		return res.status(500).json({ message: err.message });
 	}
 	res.image = image;
+	next();
+};
+
+export const getFile = (req, res, next) => {
+	
+	res.file = file;
 	next();
 };

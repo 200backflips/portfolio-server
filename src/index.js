@@ -1,25 +1,19 @@
 import express from 'express';
-import { config } from 'dotenv';
-import { connect } from 'mongoose';
-import { router } from './api/routes/routes';
+import { connect } from './mongoose';
+import { images } from './api/routes/images';
 import { uploads } from './api/routes/uploads';
 import cors from 'cors';
+import methodOverride from 'method-override';
 
 const app = express();
 const port = 8080;
-config();
-
-connect(process.env.DATABASE_URL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-})
-	.then(() => console.log('we connecteeed!'))
-	.catch(err => console.error(err.message));
+connect;
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static('public'));
-app.use('/images', router);
+app.use(methodOverride('_method'));
+
+app.use('/images', images);
 app.use('/uploads', uploads);
 
 app.listen(port, () => console.log(`listening on port ${port}`));

@@ -1,12 +1,11 @@
 import { Router } from 'express';
 import Image from '../models';
 import { getImage } from '../middleware';
-import { assets, deleteAsset } from '../../../fileSystem';
 
-export const router = Router();
+export const images = Router();
 
 // get all image objects
-router.get('/', async (req, res) => {
+images.get('/', async (req, res) => {
 	try {
 		const images = await Image.find();
 		res.json(images);
@@ -16,14 +15,15 @@ router.get('/', async (req, res) => {
 });
 
 // get single image object
-router.get('/:id', getImage, async (req, res) => {
+images.get('/:id', getImage, async (req, res) => {
 	res.send(res.image);
 });
 
 // post new image object
-router.post('/', async (req, res) => {
+images.post('/', async (req, res) => {
 	const image = new Image({
 		placement: req.body.placement,
+		placementOrder: req.body.placementOrder,
 		path: req.body.path,
 		caption: req.body.caption
 	});
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 // update image object
-router.patch('/:id', getImage, async (req, res) => {
+images.patch('/:id', getImage, async (req, res) => {
 	Object.keys(req.body).forEach(key => {
 		res.image[key] = req.body[key];
 	});
@@ -49,7 +49,7 @@ router.patch('/:id', getImage, async (req, res) => {
 });
 
 // delete image object
-router.delete('/:id', getImage, async (req, res) => {
+images.delete('/:id', getImage, async (req, res) => {
 	try {
 		await res.image.remove();
 		res.json({ message: 'image deleted' });
