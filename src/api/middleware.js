@@ -15,8 +15,26 @@ export const getImage = async (req, res, next) => {
 	next();
 };
 
+export const getAllFiles = (req, res, next) => {
+	gfs.files.find().toArray((err, result) => {
+		if (!result || result.length === 0) {
+			return res.status(404).json({
+				error: 'no files exist'
+			});
+		}
+		res.result = result;
+		next();
+	});
+};
+
 export const getFile = (req, res, next) => {
-	
-	res.file = file;
-	next();
+	gfs.files.findOne({ filename: req.params.filename }, (err, result) => {
+		if (!result || result.length === 0) {
+			return res.status(404).json({
+				error: 'no file exists'
+			});
+		}
+		res.result = result;
+		next();
+	});
 };

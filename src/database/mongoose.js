@@ -1,10 +1,6 @@
 import { connect, connection, mongo } from 'mongoose';
+import Grid from 'gridfs-stream'
 import { config } from 'dotenv';
-import { randomBytes } from 'crypto';
-import { extname } from 'path';
-import Grid from 'gridfs-stream';
-import multer from 'multer';
-import GridFsStorage from 'multer-gridfs-storage';
 
 config();
 export let gfs;
@@ -20,30 +16,8 @@ connection
 
 connection
 	.once('open', () => {
-		console.log('we opeeeen!')
-		gfs = Grid(connection.db, mongo);
+		console.log('we opeeeen!');
+		gfs = new Grid(connection.db, mongo)
 		gfs.collection('uploads');
 	})
 	.catch(err => console.error(err.message));
-
-const storage = new GridFsStorage({
-	url: process.env.DATABASE_URL,
-	options: { useUnifiedTopology: true },
-	file: (req, file) => {
-		return new Promise((resolve, reject) => {
-			randomBytes(16, (err, buf) => {
-				if (err) {
-					return reject(err);
-				}
-				const filename = buf.toString('hex') + extname(file.originalname);
-				const fileInfo = {
-					filename: filename,
-					bucketName: 'uploads'
-				};
-				resolve(fileInfo);
-			});
-		});
-	}
-});
-
-export const upload = multer({ storage }).single('file');
